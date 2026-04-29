@@ -1,0 +1,473 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Pipeline de Datos de Redes Sociales — sistema de ingesta, procesamiento y análisis de comentarios públicos de YouTube, Instagram, Facebook y TikTok." />
+  <title>Pipeline de Datos de Redes Sociales · Propuesta Técnica</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <div class="grid-bg" aria-hidden="true"></div>
+
+  <header class="nav">
+    <div class="nav__inner">
+      <a class="brand" href="#top">
+        <span class="brand__mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 7h6v6H4z"/><path d="M14 11h6v6h-6z"/><path d="M10 10l4 2"/>
+          </svg>
+        </span>
+        <span class="brand__name">Social Pipeline</span>
+        <span class="brand__tag">v1.0 · Borrador</span>
+      </a>
+      <nav class="nav__links" aria-label="Secciones">
+        <a href="#resumen">Resumen</a>
+        <a href="#alcance">Alcance</a>
+        <a href="#arquitectura">Arquitectura</a>
+        <a href="#stack">Stack</a>
+        <a href="#cronograma">Cronograma</a>
+      </nav>
+      <a class="nav__cta" href="#contacto">Contactar</a>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero__bg" aria-hidden="true">
+        <span class="hero__orb hero__orb--a"></span>
+        <span class="hero__orb hero__orb--b"></span>
+      </div>
+
+      <div class="hero__inner">
+        <div class="hero__meta reveal">
+          <span class="chip chip--draft"><span class="chip__dot"></span>Pendiente de revisión</span>
+          <span class="chip chip--ghost">Propuesta técnica · Borrador del proyecto</span>
+        </div>
+
+        <h1 class="hero__title reveal" data-delay="60">
+          Pipeline de Datos de
+          <span class="hero__title-accent">Redes Sociales</span>
+        </h1>
+
+        <p class="hero__sub reveal" data-delay="120">
+          Sistema de ingesta, procesamiento y análisis extremo a extremo
+          para comentarios públicos de YouTube, Instagram, Facebook y TikTok —
+          desde la API hasta el dashboard, con análisis de sentimiento automatizado.
+        </p>
+
+        <div class="hero__platforms reveal" data-delay="180" aria-label="Plataformas soportadas">
+          <span class="platform" data-net="youtube">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M21.6 7.2a2.5 2.5 0 0 0-1.8-1.8C18.2 5 12 5 12 5s-6.2 0-7.8.4a2.5 2.5 0 0 0-1.8 1.8C2 8.8 2 12 2 12s0 3.2.4 4.8a2.5 2.5 0 0 0 1.8 1.8C5.8 19 12 19 12 19s6.2 0 7.8-.4a2.5 2.5 0 0 0 1.8-1.8c.4-1.6.4-4.8.4-4.8s0-3.2-.4-4.8zM10 15V9l5.2 3L10 15z"/></svg>
+            YouTube
+          </span>
+          <span class="platform" data-net="instagram">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.1" fill="currentColor"/></svg>
+            Instagram
+          </span>
+          <span class="platform" data-net="facebook">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M13.5 21v-7.5h2.5l.4-3h-2.9V8.6c0-.9.3-1.5 1.6-1.5h1.7V4.4c-.3 0-1.3-.1-2.5-.1-2.5 0-4.2 1.5-4.2 4.3v2.4H7.5v3h2.6V21h3.4z"/></svg>
+            Facebook
+          </span>
+          <span class="platform" data-net="tiktok">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M16.5 3a5.5 5.5 0 0 0 4.5 4.4v3.1a8.6 8.6 0 0 1-4.5-1.5v6.5a6 6 0 1 1-6-6c.4 0 .7 0 1 .1v3.2a2.9 2.9 0 1 0 2 2.7V3h3z"/></svg>
+            TikTok
+          </span>
+        </div>
+
+        <div class="hero__cta reveal" data-delay="240">
+          <a class="btn btn--primary" href="#arquitectura">
+            Ver arquitectura
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <a class="btn btn--ghost" href="Social_Media_Pipeline_ES.pdf" target="_blank" rel="noopener">
+            Descargar propuesta (PDF)
+          </a>
+        </div>
+
+        <dl class="hero__stats reveal" data-delay="320">
+          <div>
+            <dt>Plataformas</dt>
+            <dd><span class="counter" data-target="4">0</span></dd>
+          </div>
+          <div>
+            <dt>Fases del proyecto</dt>
+            <dd><span class="counter" data-target="6">0</span></dd>
+          </div>
+          <div>
+            <dt>Días laborables</dt>
+            <dd>~<span class="counter" data-target="19">0</span></dd>
+          </div>
+          <div>
+            <dt>Capas del pipeline</dt>
+            <dd><span class="counter" data-target="6">0</span></dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- RESUMEN -->
+    <section id="resumen" class="section">
+      <div class="section__head reveal">
+        <span class="eyebrow">01 · Descripción general</span>
+        <h2>Una tubería completa, de la API al dashboard.</h2>
+      </div>
+
+      <div class="resumen">
+        <div class="resumen__copy reveal">
+          <p class="lead">
+            Diseño e implementación de un pipeline <strong>completamente automatizado</strong>
+            que recopila comentarios públicos de las cuatro principales redes sociales,
+            los limpia, los enriquece con análisis de sentimiento y los entrega listos
+            para consultar en una base de datos PostgreSQL en la nube.
+          </p>
+          <p>
+            Los datos procesados alimentan dashboards de inteligencia de negocio para el
+            equipo de analítica y sirven como fuente de entrenamiento e inferencia para
+            modelos de IA/ML. Una interfaz <strong>React + FastAPI</strong> permite a los
+            usuarios autorizados configurar la recopilación, monitorear ejecuciones y
+            explorar resultados — todo alojado en infraestructura AWS.
+          </p>
+        </div>
+
+        <aside class="resumen__card reveal" data-delay="100">
+          <header class="card__head">
+            <span class="card__label">Ficha del proyecto</span>
+            <span class="card__status">Borrador v1.0</span>
+          </header>
+          <ul class="meta-list">
+            <li><span>Autor</span><strong>Eduardo Guerrero</strong></li>
+            <li><span>Fecha</span><strong>29 de abril de 2026</strong></li>
+            <li><span>Estado</span><strong>Pendiente de revisión</strong></li>
+            <li><span>Patrón</span><strong>ELT con enriquecimiento</strong></li>
+            <li><span>Ejecución</span><strong>Programada (cada 6 h)</strong></li>
+            <li><span>Idioma análisis</span><strong>Inglés (v1)</strong></li>
+          </ul>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ALCANCE -->
+    <section id="alcance" class="section">
+      <div class="section__head reveal">
+        <span class="eyebrow">02 · Alcance y límites</span>
+        <h2>Qué entra, qué se queda fuera.</h2>
+      </div>
+
+      <div class="scope">
+        <article class="scope__col scope__col--in reveal">
+          <header>
+            <span class="scope__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>
+            </span>
+            <h3>Dentro del alcance</h3>
+          </header>
+          <ul>
+            <li>Recopilación de comentarios vía APIs oficiales de YouTube, Meta y TikTok</li>
+            <li>Almacenamiento bruto en AWS S3 — JSON con marca de tiempo</li>
+            <li>Limpieza Python: normalización, deduplicación, eliminación de nulos y HTML</li>
+            <li>Análisis de sentimiento con HuggingFace Transformers</li>
+            <li>Carga en PostgreSQL sobre AWS RDS</li>
+            <li>Interfaz React + FastAPI para configurar y ejecutar pipelines</li>
+            <li>Orquestación con Prefect — programación, reintentos, alertas</li>
+            <li>Dashboards Metabase conectados a RDS</li>
+            <li>Despliegue en AWS (EC2, S3, RDS, Secrets Manager)</li>
+            <li>Código versionado en GitHub con documentación</li>
+          </ul>
+        </article>
+
+        <article class="scope__col scope__col--out reveal" data-delay="80">
+          <header>
+            <span class="scope__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+            </span>
+            <h3>Fuera del alcance</h3>
+          </header>
+          <ul>
+            <li>Contenido privado: DMs, Stories o cualquier dato no público</li>
+            <li>Streaming en tiempo real — el pipeline se ejecuta en intervalos</li>
+            <li>Datos de publicidad pagada o dashboards nativos de plataforma</li>
+            <li>Sentimiento multilingüe en v1 — solo inglés inicialmente</li>
+            <li>Aplicación móvil — solo interfaz web</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- ARQUITECTURA -->
+    <section id="arquitectura" class="section">
+      <div class="section__head reveal">
+        <span class="eyebrow">03 · Arquitectura del sistema</span>
+        <h2>Patrón ELT con etapa de enriquecimiento.</h2>
+        <p class="section__sub">Seis capas: ingesta, almacén bruto, limpieza, enriquecimiento, almacén estructurado y consumo.</p>
+      </div>
+
+      <div class="pipeline" role="list">
+        <div class="pipeline__track" aria-hidden="true"><span class="pipeline__pulse"></span></div>
+
+        <article class="stage reveal" role="listitem">
+          <span class="stage__num">01</span>
+          <h4>Ingesta</h4>
+          <p>APIs oficiales invocadas por scripts Python. JSON en bruto recopilado por plataforma.</p>
+          <span class="stage__tool">EC2 + Python</span>
+        </article>
+
+        <article class="stage reveal" data-delay="60" role="listitem">
+          <span class="stage__num">02</span>
+          <h4>Almacén bruto</h4>
+          <p>Cada respuesta API guardada de forma inmediata, sin modificar, como JSON con marca de tiempo.</p>
+          <span class="stage__tool">AWS S3</span>
+        </article>
+
+        <article class="stage reveal" data-delay="120" role="listitem">
+          <span class="stage__num">03</span>
+          <h4>Limpieza</h4>
+          <p>Eliminación de duplicados, nulos y HTML. Normalización de codificación. Detección de idioma.</p>
+          <span class="stage__tool">Python · pandas</span>
+        </article>
+
+        <article class="stage reveal" data-delay="180" role="listitem">
+          <span class="stage__num">04</span>
+          <h4>Enriquecimiento</h4>
+          <p>Puntuación de sentimiento por comentario: positivo, negativo o neutro.</p>
+          <span class="stage__tool">HuggingFace</span>
+        </article>
+
+        <article class="stage reveal" data-delay="240" role="listitem">
+          <span class="stage__num">05</span>
+          <h4>Almacén</h4>
+          <p>Filas limpias cargadas en tablas estructuradas: comentarios, publicaciones y sentimiento.</p>
+          <span class="stage__tool">AWS RDS · Postgres</span>
+        </article>
+
+        <article class="stage reveal" data-delay="300" role="listitem">
+          <span class="stage__num">06</span>
+          <h4>Consumo</h4>
+          <p>Equipo de analítica consulta datos. Dashboards se actualizan. Modelos leen de la BD.</p>
+          <span class="stage__tool">Metabase + FastAPI</span>
+        </article>
+      </div>
+
+      <div class="infra reveal">
+        <h3>Mapa de infraestructura</h3>
+        <div class="infra__grid">
+          <div class="infra__cell"><strong>GitHub</strong><span>Control de versiones, colaboración y CI/CD</span></div>
+          <div class="infra__cell"><strong>AWS EC2</strong><span>FastAPI, agente Prefect y scripts Python 24/7</span></div>
+          <div class="infra__cell"><strong>AWS S3</strong><span>Data lake bruto — sin pérdida de datos</span></div>
+          <div class="infra__cell"><strong>AWS RDS</strong><span>PostgreSQL gestionado para datos limpios</span></div>
+          <div class="infra__cell"><strong>Secrets Manager</strong><span>API keys y credenciales nunca en el código</span></div>
+          <div class="infra__cell"><strong>Prefect</strong><span>Programación, monitoreo, reintentos y alertas</span></div>
+          <div class="infra__cell"><strong>Metabase</strong><span>BI conectado directamente a RDS</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STACK -->
+    <section id="stack" class="section">
+      <div class="section__head reveal">
+        <span class="eyebrow">04 · Stack tecnológico</span>
+        <h2>Herramientas elegidas con criterio.</h2>
+      </div>
+
+      <div class="stack">
+
+        <div class="stack__group reveal">
+          <h3><span class="stack__num">A</span> Ingesta de datos</h3>
+          <ul>
+            <li><strong>YouTube Data API v3</strong><span>Gratuita con cuota generosa. Endpoint de hilos de comentarios.</span></li>
+            <li><strong>Meta Graph API</strong><span>Instagram y Facebook. Requiere revisión de la app.</span></li>
+            <li><strong>TikTok Research API</strong><span>Requiere aprobación empresarial o académica.</span></li>
+            <li><strong>Python · requests</strong><span>Auth, paginación y límites de tasa.</span></li>
+          </ul>
+        </div>
+
+        <div class="stack__group reveal" data-delay="80">
+          <h3><span class="stack__num">B</span> Procesamiento</h3>
+          <ul>
+            <li><strong>Python 3.11+</strong><span>Lógica del pipeline y del backend.</span></li>
+            <li><strong>pandas / polars</strong><span>Limpieza, transformación y normalización a escala.</span></li>
+            <li><strong>HuggingFace Transformers</strong><span><code>cardiffnlp/twitter-roberta-base-sentiment</code></span></li>
+            <li><strong>SQLAlchemy</strong><span>ORM Python para escribir filas en PostgreSQL.</span></li>
+          </ul>
+        </div>
+
+        <div class="stack__group reveal">
+          <h3><span class="stack__num">C</span> API Backend</h3>
+          <ul>
+            <li><strong>FastAPI</strong><span>Endpoints que consume el frontend.</span></li>
+            <li><strong>Pydantic</strong><span>Validación de modelos de solicitud y respuesta.</span></li>
+            <li><strong>Uvicorn</strong><span>Servidor ASGI sobre EC2.</span></li>
+          </ul>
+        </div>
+
+        <div class="stack__group reveal" data-delay="80">
+          <h3><span class="stack__num">D</span> Frontend / UI</h3>
+          <ul>
+            <li><strong>React 18</strong><span>Selector de plataforma, historial de ejecuciones, tabla de resultados.</span></li>
+            <li><strong>TailwindCSS</strong><span>Estilo rápido, limpio y responsivo.</span></li>
+            <li><strong>Axios</strong><span>Cliente HTTP hacia el backend FastAPI.</span></li>
+          </ul>
+        </div>
+
+        <div class="stack__group stack__group--wide reveal">
+          <h3><span class="stack__num">E</span> Infraestructura y orquestación</h3>
+          <ul class="stack__cols">
+            <li><strong>AWS EC2</strong><span>Servidor Linux siempre activo.</span></li>
+            <li><strong>AWS S3</strong><span>Data lake bruto permanente.</span></li>
+            <li><strong>AWS RDS</strong><span>PostgreSQL gestionado.</span></li>
+            <li><strong>AWS Secrets Manager</strong><span>API keys y credenciales seguras.</span></li>
+            <li><strong>Prefect</strong><span>Programación, reintentos y alertas.</span></li>
+            <li><strong>GitHub</strong><span>Control de versiones y CI/CD.</span></li>
+            <li><strong>Metabase</strong><span>BI open-source conectado a RDS.</span></li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- CRONOGRAMA -->
+    <section id="cronograma" class="section">
+      <div class="section__head reveal">
+        <span class="eyebrow">05 · Fases y cronograma</span>
+        <h2>Tres semanas, seis fases, una entrega.</h2>
+      </div>
+
+      <ol class="timeline">
+        <li class="phase reveal">
+          <header>
+            <span class="phase__week">Semana 1</span>
+            <span class="phase__id">Fase 01</span>
+          </header>
+          <h4>Configuración de APIs y scripts de ingesta</h4>
+          <ul>
+            <li>Solicitar acceso a Meta Graph API y TikTok Research API</li>
+            <li>Scripts Python con paginación y gestión de rate limits</li>
+            <li>JSON en bruto en S3 con estructura por marca de tiempo</li>
+            <li>Tests unitarios por módulo de ingesta</li>
+          </ul>
+        </li>
+
+        <li class="phase reveal" data-delay="60">
+          <header>
+            <span class="phase__week">Semana 1</span>
+            <span class="phase__id">Fase 02</span>
+          </header>
+          <h4>Pipeline de limpieza y sentimiento</h4>
+          <ul>
+            <li>Deduplicación, eliminación de nulos, HTML stripping</li>
+            <li>Modelo HuggingFace para puntuación pos/neg/neutro</li>
+            <li>Carga de filas enriquecidas en PostgreSQL</li>
+            <li>Tests unitarios y de integración</li>
+          </ul>
+        </li>
+
+        <li class="phase reveal">
+          <header>
+            <span class="phase__week">Semana 2</span>
+            <span class="phase__id">Fase 03</span>
+          </header>
+          <h4>Configuración de infraestructura AWS</h4>
+          <ul>
+            <li>Provisionar EC2, RDS y buckets S3</li>
+            <li>Secrets Manager para API keys y credenciales de BD</li>
+            <li>Roles IAM, security groups y redes VPC</li>
+            <li>Despliegue del pipeline en EC2 y verificación E2E</li>
+          </ul>
+        </li>
+
+        <li class="phase reveal" data-delay="60">
+          <header>
+            <span class="phase__week">Semana 2</span>
+            <span class="phase__id">Fase 04</span>
+          </header>
+          <h4>Orquestación con Prefect</h4>
+          <ul>
+            <li>Flujos y tareas con dependencias correctas</li>
+            <li>Ejecuciones programadas (cada 6 h por plataforma)</li>
+            <li>Alertas Slack y email ante fallos o anomalías</li>
+            <li>Pruebas de reintentos y recuperación ante fallos</li>
+          </ul>
+        </li>
+
+        <li class="phase reveal">
+          <header>
+            <span class="phase__week">Semana 3</span>
+            <span class="phase__id">Fase 05</span>
+          </header>
+          <h4>Interfaz web React + FastAPI</h4>
+          <ul>
+            <li>Endpoints para disparar scrapes, consultar resultados y estado</li>
+            <li>Frontend: selector, input de cuenta, historial, tabla de resultados</li>
+            <li>Conexión React ↔ FastAPI vía Axios sobre EC2</li>
+            <li>Autenticación básica para proteger la interfaz</li>
+          </ul>
+        </li>
+
+        <li class="phase reveal" data-delay="60">
+          <header>
+            <span class="phase__week">Semana 3</span>
+            <span class="phase__id">Fase 06</span>
+          </header>
+          <h4>Dashboards, pruebas y entrega</h4>
+          <ul>
+            <li>Metabase conectado a RDS — tendencias, volumen, top comentarios</li>
+            <li>Pruebas extremo a extremo en las 4 plataformas</li>
+            <li>Documentación: setup, arquitectura, runbook</li>
+            <li>Walkthrough con el equipo de analítica</li>
+          </ul>
+        </li>
+      </ol>
+
+      <div class="recap reveal">
+        <div><span>Semana 1</span><strong>Fases 1–2</strong></div>
+        <div><span>Semana 2</span><strong>Fases 3–4</strong></div>
+        <div><span>Semana 3</span><strong>Fases 5–6</strong></div>
+        <div class="recap__total"><span>Total</span><strong>~19 días laborables</strong></div>
+      </div>
+    </section>
+
+    <!-- CONTACTO -->
+    <section id="contacto" class="section section--cta">
+      <div class="cta reveal">
+        <h2>¿Listo para revisar la propuesta?</h2>
+        <p>Documento de trabajo. Estimaciones, alcance y decisiones técnicas sujetos a revisión según comentarios de stakeholders y plazos de aprobación de las APIs.</p>
+        <div class="cta__actions">
+          <a class="btn btn--primary" href="mailto:teamq@groupquimera.com?subject=Pipeline%20de%20Datos%20de%20Redes%20Sociales%20%C2%B7%20Revisi%C3%B3n">
+            Escribir a Eduardo
+          </a>
+          <a class="btn btn--ghost" href="Social_Media_Pipeline_ES.pdf" target="_blank" rel="noopener">
+            Descargar PDF completo
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="foot">
+    <div class="foot__inner">
+      <div>
+        <strong>Pipeline de Datos de Redes Sociales</strong>
+        <span>Borrador v1.0 · 29 de abril de 2026</span>
+      </div>
+      <div class="foot__author">
+        <span>Elaborado por</span>
+        <strong>Eduardo Guerrero</strong>
+      </div>
+      <div class="foot__legend">CONFIDENCIAL · USO INTERNO</div>
+    </div>
+  </footer>
+
+  <button id="toTop" class="to-top" aria-label="Volver arriba" hidden>
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+  </button>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
